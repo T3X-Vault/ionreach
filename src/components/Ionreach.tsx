@@ -504,40 +504,75 @@ export function Ionreach() {
         loop
         preload="auto"
       />
-      {!battle && <div className="absolute inset-0 bg-bg/45" />}
       {!battle && (
-        <div className="relative z-10 flex h-full flex-col justify-end px-5 py-6 md:px-12 md:py-10">
-          <p className="font-display text-sm tracking-[0.28em] text-ion">HELION DIRECTORATE · T3X</p>
-          <h1 className="font-display text-6xl leading-none font-bold text-fg md:text-8xl">IONREACH</h1>
-          <p className="mt-2 max-w-xl text-base text-muted md:text-lg">
-            Callsign T3X holds the glass. Break Vesper forces to earn T3X, then spend it on Shield and TAP.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button type="button" onClick={deploy} className="min-h-11 bg-ion px-5 font-display text-lg font-semibold text-bg">
-              Deploy
-            </button>
-            <button type="button" onClick={() => openCinema(0)} className="inline-flex min-h-11 items-center gap-2 border border-line bg-surface/80 px-5 font-display text-lg text-fg">
-              <Play className="size-4" />
-              Play trailer
-            </button>
-            <button type="button" onClick={() => setManual(true)} className="min-h-11 px-4 font-display text-lg text-muted">
-              Field manual
+        <>
+          <div className="title-scrim absolute inset-0" />
+          <div className="title-grain pointer-events-none absolute inset-0" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ion/50 to-transparent" />
+        </>
+      )}
+
+      {!battle && (
+        <div className="relative z-10 flex h-full flex-col justify-between px-5 py-5 md:px-12 md:py-8">
+          <div className="anim-fade flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/brand/futuret3ch.png?v=2" alt="" className="h-9 w-9 object-contain md:h-11 md:w-11" />
+              <div>
+                <p className="font-display hud-chip text-[11px] leading-none text-muted">Supported by</p>
+                <p className="mt-1 font-display text-lg leading-none tracking-[0.12em] text-fg md:text-xl">FUTURET3CH</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={toggleMute}
+              className="cta-ghost inline-flex min-h-11 min-w-11 items-center justify-center"
+              aria-label={muted ? "Sound on" : "Mute"}
+            >
+              {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
             </button>
           </div>
-          <p className="mt-6 max-w-lg text-xs text-muted">
-            Supported by Futuret3ch. Original battle sim. Not affiliated with any classic strategy publisher.
-            {purse > 0 ? ` T3X ledger ${purse}.` : ""}
-            {best ? ` Fastest hold: ${clock(best)}.` : ""}
-          </p>
+
+          <div className="max-w-2xl pb-2 md:pb-4">
+            <div className="anim-rise ion-rule anim-pulse-ion mb-4 origin-left" />
+            <h1 className="anim-rise font-display text-[clamp(4.5rem,18vw,9.5rem)] leading-[0.82] font-semibold tracking-[0.02em] text-fg">
+              IONREACH
+            </h1>
+            <p className="anim-rise-delay-1 mt-3 font-display text-2xl leading-none tracking-[0.08em] text-ion md:text-3xl">
+              Glass Horizon
+            </p>
+            <p className="anim-rise-delay-2 mt-3 max-w-md text-sm text-muted md:text-base">
+              Callsign T3X holds the glass. Break Vesper, earn T3X, spend it on Shield and TAP.
+            </p>
+            <div className="anim-rise-delay-3 mt-7 flex flex-wrap items-center gap-3">
+              <button type="button" onClick={deploy} className="cta-primary min-h-12 px-7 font-display text-2xl font-semibold tracking-wide">
+                Deploy
+              </button>
+              <button type="button" onClick={() => openCinema(0)} className="cta-ghost inline-flex min-h-12 items-center gap-2 px-5 font-display text-xl tracking-wide">
+                <Play className="size-4 text-ion" />
+                Play trailer
+              </button>
+              <button type="button" onClick={() => setManual(true)} className="min-h-12 px-2 font-display text-lg tracking-wide text-muted transition-colors hover:text-fg">
+                Field manual
+              </button>
+            </div>
+            <div className="anim-rise-delay-3 mt-8 flex items-end gap-4">
+              <img src="/brand/t3x-coin.png" alt="T3x" className="anim-float h-14 w-14 object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.55)] md:h-16 md:w-16" />
+              <div className="pb-1 text-xs text-muted">
+                <p>Original battle sim · Helion mark T3X</p>
+                {purse > 0 && <p className="mt-1 font-display text-base tracking-wide text-ion">Ledger {purse}</p>}
+                {best != null && <p className="mt-0.5 font-display text-base tracking-wide text-gold">Fastest hold {clock(best)}</p>}
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
       {cinema && (
-        <div className="absolute inset-0 z-30 flex flex-col bg-bg">
+        <div className="absolute inset-0 z-30 flex flex-col bg-bg anim-fade">
           <video ref={cutRef} className="min-h-0 flex-1 object-contain" src="/media/trailer.mp4?v=9" autoPlay controls playsInline poster="/media/poster.jpg?v=9" />
-          <div className="flex items-center justify-between gap-3 px-4 py-3">
-            <p className="font-display text-lg tracking-widest text-ion">T3X · GLASS HORIZON</p>
-            <button type="button" onClick={closeCinema} className="min-h-11 bg-ion px-4 font-display text-bg">
+          <div className="flex items-center justify-between gap-3 border-t border-line/80 px-4 py-3">
+            <p className="font-display text-xl tracking-[0.18em] text-ion">T3X · GLASS HORIZON</p>
+            <button type="button" onClick={closeCinema} className="cta-primary min-h-11 px-5 font-display text-xl">
               Close
             </button>
           </div>
@@ -545,10 +580,11 @@ export function Ionreach() {
       )}
 
       {manual && (
-        <div className="absolute inset-0 z-40 flex items-end justify-center bg-bg/70 p-4 md:items-center">
-          <div className="w-full max-w-lg border border-line bg-surface p-5">
-            <h2 className="font-display text-2xl font-semibold">Field manual</h2>
-            <ul className="mt-3 space-y-2 text-sm text-muted">
+        <div className="absolute inset-0 z-40 flex items-end justify-center bg-bg/75 p-4 backdrop-blur-sm md:items-center">
+          <div className="anim-rise panel-glass w-full max-w-lg p-6">
+            <div className="ion-rule mb-3" />
+            <h2 className="font-display text-3xl font-semibold tracking-wide">Field manual</h2>
+            <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-muted">
               <li>Drag a box or tap to select. Right-click to move or attack. On a phone, tap a unit, then tap the ground. Drag to pan.</li>
               <li>Q, or A-move, then click is attack-move. H holds position. R repairs a building for ionite. X scraps it for half cost.</li>
               <li>WASD or arrows pan. Scroll or pinch to zoom. Right-drag pans. Space snaps to the selection. P pauses. Ctrl+1/2/3 stores a group.</li>
@@ -558,7 +594,7 @@ export function Ionreach() {
               <li>A launch spine, after the vehicle bay, builds Kestrel fighters and Condor bombers. They ignore the ridge.</li>
               <li>Win by destroying the Vesper command spire. Lose yours and the horizon falls.</li>
             </ul>
-            <button type="button" onClick={() => setManual(false)} className="mt-4 min-h-11 bg-ion px-4 font-display text-bg">
+            <button type="button" onClick={() => setManual(false)} className="cta-primary mt-5 min-h-11 px-5 font-display text-xl">
               Understood
             </button>
           </div>
@@ -570,33 +606,33 @@ export function Ionreach() {
           <canvas ref={canvasRef} className="absolute inset-0 h-full w-full touch-none" />
           <div className="pointer-events-none absolute inset-0 flex flex-col">
             <header className="flex items-start justify-between gap-2 p-3">
-              <div className="pointer-events-auto flex items-center gap-2 bg-bg/40 px-2 py-1.5 backdrop-blur-sm">
+              <div className="pointer-events-auto panel-glass flex items-center gap-2.5 px-2.5 py-2">
                 <img src="/brand/futuret3ch.png?v=2" alt="" className="h-10 w-10 object-contain" />
                 <div>
-                  <p className="font-display text-[10px] leading-none tracking-[0.2em] text-muted">SUPPORTED BY</p>
-                  <p className="mt-1 font-display text-sm leading-none font-bold tracking-[0.14em] text-fg">FUTURET3CH</p>
-                  <p className="mt-1 font-display text-xl leading-none">{clock(hud?.time ?? 0)}</p>
+                  <p className="font-display hud-chip text-[10px] leading-none text-muted">Supported by</p>
+                  <p className="mt-1 font-display text-base leading-none tracking-[0.12em] text-fg">FUTURET3CH</p>
+                  <p className="mt-1 font-display text-2xl leading-none tabular-nums">{clock(hud?.time ?? 0)}</p>
                 </div>
               </div>
               <div className="pointer-events-none max-w-sm text-center">
-                {hud?.message && <p className="border border-line bg-bg/80 px-3 py-2 font-display text-lg text-fg">{hud.message}</p>}
-                {hud?.low && <p className="mt-2 bg-ember px-3 py-1 font-display text-bg">Grid starved</p>}
-                {hud?.attackArm && <p className="mt-2 bg-ion px-3 py-1 font-display text-bg">Attack-move — choose ground</p>}
-                {hud?.paused && <p className="mt-2 bg-gold px-3 py-1 font-display text-bg">Paused</p>}
+                {hud?.message && <p className="panel-glass px-3 py-2 font-display text-xl tracking-wide text-fg">{hud.message}</p>}
+                {hud?.low && <p className="mt-2 bg-ember px-3 py-1 font-display text-lg tracking-wide text-bg">Grid starved</p>}
+                {hud?.attackArm && <p className="mt-2 bg-ion px-3 py-1 font-display text-lg tracking-wide text-bg">Attack-move — choose ground</p>}
+                {hud?.paused && <p className="mt-2 bg-gold px-3 py-1 font-display text-lg tracking-wide text-bg">Paused</p>}
               </div>
-              <div className="pointer-events-auto border border-line bg-surface/90 px-3 py-2 text-right">
-                <p className="font-display text-2xl leading-none text-gold">{hud?.credits ?? 0}</p>
-                <p className="text-xs text-muted">ionite · cap {hud?.cap ?? 0}</p>
-                <p className="mt-1 font-display text-xl leading-none text-ion">{hud?.t3x ?? 0} T3X</p>
+              <div className="pointer-events-auto panel-glass px-3 py-2 text-right">
+                <p className="font-display text-3xl leading-none tabular-nums text-gold">{hud?.credits ?? 0}</p>
+                <p className="text-[11px] text-muted">ionite · cap {hud?.cap ?? 0}</p>
+                <p className="mt-1 font-display text-2xl leading-none tabular-nums text-ion">{hud?.t3x ?? 0} T3X</p>
                 <div className="mt-2 flex justify-end gap-1">
-                  <button type="button" onClick={() => simRef.current?.buyShield()} className="min-h-9 border border-line px-2 font-display text-xs">
+                  <button type="button" onClick={() => simRef.current?.buyShield()} className="cta-ghost min-h-9 px-2 font-display text-sm tracking-wide">
                     Shield 40
                   </button>
-                  <button type="button" onClick={() => simRef.current?.buyTap()} className="min-h-9 border border-line px-2 font-display text-xs">
+                  <button type="button" onClick={() => simRef.current?.buyTap()} className="cta-ghost min-h-9 px-2 font-display text-sm tracking-wide">
                     TAP 25
                   </button>
                 </div>
-                <p className={hud?.low ? "mt-1 font-display text-ember" : "mt-1 font-display text-ion"}>
+                <p className={hud?.low ? "mt-1 font-display text-lg text-ember" : "mt-1 font-display text-lg text-ion"}>
                   <Zap className="mr-1 inline size-3" />
                   {hud?.prod ?? 0}/{hud?.use ?? 0}
                 </p>
@@ -605,12 +641,12 @@ export function Ionreach() {
 
             <div className="flex min-h-0 flex-1">
               <div className="flex-1" />
-              <aside className="pointer-events-auto m-3 hidden w-56 flex-col gap-2 overflow-y-auto border border-line bg-surface/90 p-2 md:flex">
-                <p className="px-1 font-display text-xs tracking-[0.18em] text-muted">RAISE</p>
+              <aside className="pointer-events-auto panel-glass m-3 hidden w-56 flex-col gap-1.5 overflow-y-auto p-2 md:flex">
+                <p className="px-1 font-display hud-chip text-[11px] text-muted">Raise</p>
                 {BUILD_MENU.map((k) => (
                   <BuildButton key={k} kind={k} hud={hud} onClick={() => simRef.current?.armPlace(k)} />
                 ))}
-                <p className="px-1 pt-2 font-display text-xs tracking-[0.18em] text-muted">TRAIN</p>
+                <p className="px-1 pt-2 font-display hud-chip text-[11px] text-muted">Train</p>
                 {UNIT_MENU.map((k) => (
                   <BuildButton key={k} kind={k} hud={hud} onClick={() => simRef.current?.armPlace(k)} />
                 ))}
@@ -618,8 +654,8 @@ export function Ionreach() {
             </div>
 
             {flyover && phase === "battle" && (
-              <div className="pointer-events-none px-4 pb-2 text-center">
-                <p className="font-display text-2xl text-fg md:text-3xl">{introLine}</p>
+              <div className="pointer-events-none px-4 pb-3 text-center">
+                <p className="font-display text-3xl tracking-wide text-fg drop-shadow-[0_2px_12px_rgba(0,0,0,0.75)] md:text-4xl">{introLine}</p>
               </div>
             )}
 
@@ -629,7 +665,7 @@ export function Ionreach() {
                 width={180}
                 height={120}
                 onPointerDown={onMini}
-                className="pointer-events-auto h-24 w-32 border border-line bg-bg md:h-32 md:w-44"
+                className="pointer-events-auto h-24 w-32 border border-ion/25 bg-bg/80 md:h-32 md:w-44"
               />
               <SelectionCard hud={hud} onStop={() => simRef.current?.stop()} onRepair={() => simRef.current?.toggleRepair()} onSell={() => simRef.current?.sell()} onAmove={() => {
                 const sim = simRef.current;
@@ -652,7 +688,7 @@ export function Ionreach() {
                       }
                       setFlyover(false);
                     }}
-                    className="min-h-11 border border-line bg-surface px-3 font-display"
+                    className="cta-ghost min-h-11 px-4 font-display text-xl"
                   >
                     Skip
                   </button>
@@ -666,7 +702,7 @@ export function Ionreach() {
                       setHud(simRef.current.snapshot());
                     }
                   }}
-                  className="inline-flex min-h-11 min-w-11 items-center justify-center border border-line bg-surface"
+                  className="cta-ghost inline-flex min-h-11 min-w-11 items-center justify-center"
                   aria-label="Pause"
                 >
                   <Pause className="size-4" />
@@ -683,15 +719,16 @@ export function Ionreach() {
       )}
 
       {(phase === "win" || phase === "lose") && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-bg/70 p-4">
-          <div className="w-full max-w-md border border-line bg-surface p-6">
-            <p className="font-display text-sm tracking-[0.2em] text-ion">{phase === "win" ? "HORIZON HELD" : "HORIZON LOST"}</p>
-            <h2 className="font-display text-4xl font-semibold">{phase === "win" ? "Vesper spire is dust." : "The spire fell."}</h2>
-            <p className="mt-2 text-muted">{phase === "win" ? `Held in ${clock(hud?.time ?? 0)}.` : "Rebuild the grid and try the ridge again."}</p>
-            <p className="mt-1 font-display text-ion">T3X ledger {hud?.t3x ?? purse}</p>
-            {best && phase === "win" && <p className="mt-1 text-sm text-gold">Best {clock(best)}</p>}
-            <div className="mt-5 flex gap-3">
-              <button type="button" onClick={deploy} className="min-h-11 bg-ion px-4 font-display text-bg">
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-bg/75 p-4 backdrop-blur-sm">
+          <div className="anim-rise panel-glass w-full max-w-md p-7">
+            <div className="ion-rule mb-3" />
+            <p className="font-display hud-chip text-sm text-ion">{phase === "win" ? "Horizon held" : "Horizon lost"}</p>
+            <h2 className="mt-1 font-display text-5xl font-semibold leading-none tracking-wide">{phase === "win" ? "Vesper spire is dust." : "The spire fell."}</h2>
+            <p className="mt-3 text-muted">{phase === "win" ? `Held in ${clock(hud?.time ?? 0)}.` : "Rebuild the grid and try the ridge again."}</p>
+            <p className="mt-2 font-display text-2xl text-ion">T3X ledger {hud?.t3x ?? purse}</p>
+            {best && phase === "win" && <p className="mt-1 font-display text-lg text-gold">Best {clock(best)}</p>}
+            <div className="mt-6 flex gap-3">
+              <button type="button" onClick={deploy} className="cta-primary min-h-11 px-5 font-display text-xl">
                 Redeploy
               </button>
               <button
@@ -700,7 +737,7 @@ export function Ionreach() {
                   setPhase("title");
                   phaseRef.current = "title";
                 }}
-                className="min-h-11 border border-line px-4 font-display"
+                className="cta-ghost min-h-11 px-5 font-display text-xl"
               >
                 Title
               </button>
@@ -708,13 +745,6 @@ export function Ionreach() {
           </div>
         </div>
       )}
-
-      {!battle && (
-        <button type="button" onClick={toggleMute} className="absolute top-4 right-4 z-10 inline-flex min-h-11 min-w-11 items-center justify-center border border-line bg-surface/80" aria-label={muted ? "Sound on" : "Mute"}>
-          {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
-        </button>
-      )}
-      <img src="/brand/t3x-coin.png" alt="T3x" className="pointer-events-none absolute right-3 bottom-36 z-40 h-16 w-16 object-contain drop-shadow-[0_6px_16px_rgba(0,0,0,0.65)] md:right-4 md:bottom-40 md:h-20 md:w-20" />
     </main>
   );
 }
@@ -733,17 +763,17 @@ function BuildButton({ kind, hud, onClick, compact }: { kind: Kind; hud: HudSnap
       onClick={onClick}
       title={`${def.name} — ${def.cost} ionite. ${def.blurb}`}
       className={
-        "relative flex min-h-11 items-center gap-2 border px-2 text-left " +
-        (active ? "border-ion bg-surface-2 text-fg " : "border-line bg-bg/40 text-fg ") +
-        (on && afford ? "" : "opacity-50 ") +
+        "relative flex min-h-11 items-center gap-2 border px-2 text-left transition-colors " +
+        (active ? "border-ion bg-ion/15 text-fg " : "border-line/80 bg-bg/30 text-fg hover:border-ion/40 ") +
+        (on && afford ? "" : "opacity-45 ") +
         (compact ? "min-w-11 shrink-0 justify-center" : "w-full")
       }
     >
       <Icon className="size-4 shrink-0 text-ion" />
       {!compact && (
         <span className="min-w-0 flex-1">
-          <span className="block truncate font-display text-base leading-tight">{def.name}</span>
-          <span className="block text-xs text-gold">{def.cost}</span>
+          <span className="block truncate font-display text-lg leading-tight tracking-wide">{def.name}</span>
+          <span className="block text-xs tabular-nums text-gold">{def.cost}</span>
         </span>
       )}
       {pct !== undefined && <span className="absolute bottom-0 left-0 h-0.5 bg-ion" style={{ width: `${Math.round(pct * 100)}%` }} />}
@@ -767,14 +797,14 @@ function SelectionCard({
   const sel = hud?.selected ?? [];
   const first = sel[0];
   return (
-    <div className="pointer-events-auto flex min-w-0 flex-1 items-center gap-3 border border-line bg-surface/90 px-3 py-2">
+    <div className="pointer-events-auto panel-glass flex min-w-0 flex-1 items-center gap-3 px-3 py-2">
       {first ? (
         <>
           <div className="min-w-0">
-            <p className="truncate font-display text-lg leading-tight">{sel.length > 1 ? `${sel.length} selected` : DEFS[first.kind].name}</p>
+            <p className="truncate font-display text-xl leading-tight tracking-wide">{sel.length > 1 ? `${sel.length} selected` : DEFS[first.kind].name}</p>
             <p className="truncate text-xs text-muted">{sel.length > 1 ? "Move them as a line." : DEFS[first.kind].blurb}</p>
             {sel.length === 1 && (
-              <div className="mt-1 h-1.5 w-28 bg-bg">
+              <div className="mt-1 h-1.5 w-28 overflow-hidden bg-bg/80">
                 <div className="h-full bg-ion" style={{ width: `${Math.max(0, (first.hp / first.maxHp) * 100)}%` }} />
               </div>
             )}
@@ -788,21 +818,21 @@ function SelectionCard({
           </div>
           <div className="ml-auto flex gap-2">
             {!first.building && (
-              <button type="button" onClick={onStop} className="inline-flex min-h-11 min-w-11 items-center justify-center border border-line" aria-label="Stop">
+              <button type="button" onClick={onStop} className="cta-ghost inline-flex min-h-11 min-w-11 items-center justify-center" aria-label="Stop">
                 <Square className="size-4" />
               </button>
             )}
-            <button type="button" onClick={onAmove} className="inline-flex min-h-11 items-center gap-1 border border-line px-2 font-display" aria-label="Attack move">
+            <button type="button" onClick={onAmove} className="cta-ghost inline-flex min-h-11 items-center gap-1 px-2 font-display text-lg" aria-label="Attack move">
               <Sword className="size-4" />
               <span className="hidden sm:inline">A-move</span>
             </button>
             {first.building && first.team === 0 && (
               <>
-                <button type="button" onClick={onRepair} className="inline-flex min-h-11 min-w-11 items-center justify-center border border-line" aria-label="Repair">
+                <button type="button" onClick={onRepair} className="cta-ghost inline-flex min-h-11 min-w-11 items-center justify-center" aria-label="Repair">
                   <Wrench className={"size-4 " + (first.repairOn ? "text-ion" : "")} />
                 </button>
                 {first.kind !== "spire" && (
-                  <button type="button" onClick={onSell} className="min-h-11 border border-line px-2 font-display text-ember">
+                  <button type="button" onClick={onSell} className="cta-ghost min-h-11 px-2 font-display text-lg text-ember">
                     Sell
                   </button>
                 )}
